@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-course",
+  "version": "1.0.0",
+  "description": "Basic nodejs course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Roman-Kachura/nodejs-course.git"
+  },
+  "author": "roma.kachyra@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Roman-Kachura/nodejs-course/issues"
+  },
+  "homepage": "https://github.com/Roman-Kachura/nodejs-course#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
