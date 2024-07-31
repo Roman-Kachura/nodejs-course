@@ -2,3 +2,5 @@
 /.git
 /node_modules
 /.env
+write_text.txt
+text.txt
