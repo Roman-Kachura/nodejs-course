@@ -3,3 +3,7 @@
 /node_modules
 /.env
 /parts
+/parts/file-system.js
+/parts/index.js
+/parts/path.js
+/parts/process.js
