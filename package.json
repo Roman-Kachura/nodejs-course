@@ -2,10 +2,10 @@
   "name": "nodejs-course",
   "version": "1.0.0",
   "description": "Basic nodejs course",
-  "main": "index.js",
+  "main": "parts/index.js",
   "scripts": {
-    "cross": "cross-env PORT=5000 NODE_ENV=production node index.js",
-    "start": "node index.js"
+    "cross": "cross-env PORT=5000 NODE_ENV=production node parts/index.js",
+    "start": "nodemon parts/index.js"
   },
   "repository": {
     "type": "git",

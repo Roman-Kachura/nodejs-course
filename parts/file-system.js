@@ -38,53 +38,57 @@ const text = users.map(u => `${u.name}: ${u.message}`).join('\n')
 
 function writeFileAsync(path, data) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(path,data, (e) => {
-      if(e) return reject(e)
+    fs.writeFile(path, data, (e) => {
+      if (e) return reject(e)
     })
 
     return resolve()
   })
 }
+
 function appendFileAsync(path, data) {
-  return new Promise((resolve,reject) => {
-    fs.appendFile(path,data, (e) => {
-      if(e) return reject()
+  return new Promise((resolve, reject) => {
+    fs.appendFile(path, data, (e) => {
+      if (e) return reject()
       return resolve();
     })
   })
 }
-function readFileAsync(path){
-  return new Promise((resolve,reject) => {
-    fs.readFile(path,{encoding:'utf8'}, (e,data) => {
-      if(e) return reject()
+
+function readFileAsync(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, {encoding: 'utf8'}, (e, data) => {
+      if (e) return reject()
       return resolve(data)
     })
   })
 }
-function rmFileAsync(path){
-  return new Promise((resolve,reject) => {
+
+function rmFileAsync(path) {
+  return new Promise((resolve, reject) => {
     fs.rm(path, (e) => {
-      if(e) return reject()
+      if (e) return reject()
       return resolve();
     })
   })
 }
-writeFileAsync(path.resolve(__dirname,'write_text.txt'), text)
+
+writeFileAsync(path.resolve(__dirname, 'parts', 'write_text.txt'), text)
   .then()
   .catch()
 
-writeFileAsync(path.resolve(__dirname,'write_text_1.txt'), 'file will be deleted')
+writeFileAsync(path.resolve(__dirname, 'parts', 'write_text_1.txt'), 'file will be deleted')
   .then()
   .catch(e => console.log(e))
 
-appendFileAsync(path.resolve(__dirname,'write_text.txt'), '/\nKostya: Я тоже тут!')
+appendFileAsync(path.resolve(__dirname, 'parts', 'write_text.txt'), '/\nKostya: Я тоже тут!')
   .then()
   .catch(e => console.log(e))
 
-readFileAsync(path.resolve(__dirname,'write_text.txt'))
+readFileAsync(path.resolve(__dirname, 'parts', 'write_text.txt'))
   .then(data => console.log(`Прочитанный файл: ${data}`))
   .catch(e => console.log(e))
 
-rmFileAsync(path.resolve(__dirname,'write_text_1.txt'))
+rmFileAsync(path.resolve(__dirname, 'parts', 'write_text_1.txt'))
   .then()
   .catch(e => console.log(e))
