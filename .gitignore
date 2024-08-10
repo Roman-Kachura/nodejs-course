@@ -1,7 +1,7 @@
 /.idea
 /.git
 /node_modules
-/.env
+.env
 /parts
 /parts/file-system.js
 /parts/index.js
