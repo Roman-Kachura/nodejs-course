@@ -1,20 +1,14 @@
-const Router = require('../framework/Router')
-
-const router = new Router()
+const router = require('../framework/Router')
+const {database} = require("./database");
 
 const getId = () => Math.floor(Math.random() * 10e6)
-
-const users = [
-  {id: 1, name: 'Ulbitv'},
-  {id: 2, name: 'Roman'},
-  {id: 3, name: 'Kostya'},
-]
 
 router.post('/users', (req, res) => {
   console.log(req.params)
 })
 
-router.get('/users', (req, res) => {
+router.get('/users', async (req, res) => {
+  const users = await database.collection('users').find().toArray()
   return res.send(users)
 })
 
