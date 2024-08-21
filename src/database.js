@@ -5,4 +5,4 @@ const database = client.db('nodejs-course-db')
 const getId = (id) => new ObjectId(id)
 
 
-module.exports = {client, database, getId}
+module.exports = {client, database, ObjectId, getId}

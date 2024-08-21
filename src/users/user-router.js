@@ -2,7 +2,19 @@ const router = require('../../framework/Router')
 const {database, client, getId} = require("../database")
 
 router.post('/users', (req, res) => {
-  console.log(req.params)
+  const body = {}
+  req.setEncoding('utf8');
+  req.on('data', (chunk) => {
+    const c = JSON.parse(chunk)
+    for (let key in c) {
+      body[key] = c[key]
+    }
+  })
+  req.on('end', async () => {
+    const createdUser = await database.collection('users').insertOne({name: body.name})
+    const user = await database.collection('users').findOne({_id: createdUser.insertedId})
+    return res.send(user)
+  })
 })
 
 router.get('/users', async (req, res) => {
@@ -10,7 +22,7 @@ router.get('/users', async (req, res) => {
   if (id) {
     const _id = getId(id)
     const user = await database.collection('users').findOne({_id})
-    return user ? res.send(user) : res.send({message:'User not found'})
+    return user ? res.send(user) : res.send({message: 'User not found'})
   } else {
     const users = await database.collection('users').find().toArray()
     return res.send(users)
@@ -18,19 +30,39 @@ router.get('/users', async (req, res) => {
 })
 
 router.put('/users', (req, res) => {
-  console.log(req.params)
+  req.setEncoding('utf8');
+  const {id} = req.params
+
+  if (id) {
+    const _id = getId(id)
+    const body = {}
+
+    req.on('data', (chunk) => {
+      const c = JSON.parse(chunk)
+      for (let key in c) {
+        body[key] = c[key]
+      }
+    })
+
+    req.on('end', async () => {
+      const updatedUser = await database
+        .collection('users')
+        .updateOne({_id}, {$set: {name: body.name}}, {upsert: false})
+      return res.send(updatedUser)
+    })
+  }
 })
 
 router.delete('/users', (req, res) => {
   const {id} = req.params
 
-  if(id){
+  if (id) {
     const _id = getId(id)
     const deletedUser = database.collection('users').deleteOne({_id})
-    if(deletedUser) return res.send({message:'User successfully deleted'})
-     return res.send({message:'Something wrong'})
+    if (deletedUser) return res.send({message: 'User successfully deleted'})
+    return res.send({message: 'Something wrong'})
   }
-  return res.send({message:'User not found'})
+  return res.send({message: 'User not found'})
 })
 
 module.exports = router
