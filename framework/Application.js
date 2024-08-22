@@ -30,7 +30,7 @@ module.exports = class Application {
       this.middleware.forEach(middleware => middleware(req, res))
       const emitted = this.emitter.emit(this._getRouterMask(req.pathname, req.method), req, res)
 
-      if (!emitted) res.end(req.url)
+      if (!emitted) return res.end(req.url)
     })
   }
 

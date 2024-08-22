@@ -1,5 +1,6 @@
-const router = require('../../framework/Router')
-const {database, client, getId} = require("../database")
+const Router = require('../../framework/Router')
+const router = new Router()
+const {database, getId} = require("../database")
 
 router.post('/users', (req, res) => {
   const body = {}
@@ -53,16 +54,24 @@ router.put('/users', (req, res) => {
   }
 })
 
-router.delete('/users', (req, res) => {
+router.delete('/users', async (req, res) => {
   const {id} = req.params
 
   if (id) {
     const _id = getId(id)
-    const deletedUser = database.collection('users').deleteOne({_id})
-    if (deletedUser) return res.send({message: 'User successfully deleted'})
-    return res.send({message: 'Something wrong'})
+    const user = await database.collection('users').findOne({_id})
+    if (user) {
+      const deletedUser = await database.collection('users').deleteOne({_id})
+      if (deletedUser) {
+        return res.send({message: 'User successfully deleted'})
+      } else {
+        return res.send({message: 'Something wrong'})
+      }
+    } else {
+      return res.send({message: 'User not found'})
+    }
+
   }
-  return res.send({message: 'User not found'})
 })
 
 module.exports = router
