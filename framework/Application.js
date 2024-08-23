@@ -26,8 +26,8 @@ module.exports = class Application {
   }
 
   _createServer() {
-    return http.createServer((req, res) => {
-      this.middleware.forEach(middleware => middleware(req, res))
+    return http.createServer(async (req, res) => {
+      await this.middleware.forEach(middleware => middleware(req, res))
       const emitted = this.emitter.emit(this._getRouterMask(req.pathname, req.method), req, res)
 
       if (!emitted) return res.end(req.url)
